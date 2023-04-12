@@ -18,8 +18,8 @@ if (sentryConfig && !sentryConfig.disabled) {
                 new Sentry.Integrations.Http({ tracing: true }),
                 new Tracing.Integrations.Express({app,}),
             ],
-            tracesSampleRate: sentryConfig.tracesSampleRate,
-            beforeSend: (event, hint) => {
+            tracesSampleRate: sentryConfig.tracesSampleRate || 0,
+            beforeSend: function (event, hint) {
                 const exception = hint.originalException;
 
                 event.tags = event.tags || {};
